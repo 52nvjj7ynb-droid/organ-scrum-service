@@ -21,6 +21,18 @@ See [`CONTRACT.md`](CONTRACT.md) for the full input/output ports and
 # shadow-run on a committed sample
 ORGAN_INPUT=samples/advance_to_next_persona.json python3 organ.py
 
-# tests
+# ports conformance + tests
+python3 check_ports.py
 python3 -m pytest -v
 ```
+
+## Connection standard
+
+`ports.json` declares the inputs `decide()` reads from `state` and the outputs
+it writes under `output`, each typed against the vocabulary in
+[`types.json`](types.json). The orchestrator's canonical `types.json`
+(`Data-Flow-Advisory/orchestrator@feat/drift-gate`) was unreachable (HTTP 404)
+at build time, so the JSON-primitive type names are **vendored** locally to keep
+the conformance check self-contained; the names are pending reconciliation
+upstream. This organ maps cleanly onto JSON primitives and **proposes no new
+type**.

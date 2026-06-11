@@ -57,3 +57,10 @@ Loading the Interview row, the per-persona LLM standup generation
 to `completed`, and queuing each persona's next-actions as gated approval jobs
 (`_queue_scrum_actions`). The organ surfaces `scrum_ended` so the spine knows
 when to run those side effects; it performs none of them.
+
+## Conformance
+
+`check_ports.py` asserts ports.json parses, every type exists in `types.json`,
+`decide()` reads every declared input from `state`, and the produced output
+keys equal the declared output set. See `ports.json` and `CONNECTORS.md` of the
+orchestrator for the connection standard.
