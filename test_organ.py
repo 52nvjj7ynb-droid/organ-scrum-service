@@ -1,10 +1,13 @@
 """Tests for the scrum-service organ — the pure standup state machine.
 
 Covers the three transition paths (advance, end, chair-no-advance), the
-next-speaker read, the fail-safe contract, and the committed samples.
+next-speaker read, the fail-safe contract, and a subprocess run of
+check_ports.py so the connection-standard ports stay honest in CI.
 """
 import json
 import os
+import subprocess
+import sys
 
 import pytest
 
@@ -157,3 +160,39 @@ def test_samples_run_clean(fname):
         "phase", "turn_index", "contribution", "contributions",
         "contribution_count", "scrum_ended", "next_speaker",
     }
+
+
+# --- ports.json contract -----------------------------------------------------
+
+def test_check_ports_passes():
+    proc = subprocess.run(
+        [sys.executable, os.path.join(HERE, "check_ports.py")],
+        capture_output=True, text=True,
+    )
+    assert proc.returncode == 0, f"check_ports.py failed:\n{proc.stdout}\n{proc.stderr}"
+
+
+def test_ports_outputs_match_decide_exactly():
+    with open(os.path.join(HERE, "ports.json")) as fh:
+        ports = json.load(fh)
+    declared_out = {o["name"] for o in ports["outputs"]}
+    produced = set(decide(_base_state(), {})["output"].keys())
+    assert produced == declared_out
+
+
+def test_every_declared_input_read_by_decide():
+    with open(os.path.join(HERE, "ports.json")) as fh:
+        ports = json.load(fh)
+    with open(os.path.join(HERE, "organ.py")) as fh:
+        source = fh.read()
+    for spec in ports["inputs"]:
+        assert f'state.get("{spec["name"]}"' in source, spec["name"]
+
+
+def test_every_type_in_vocabulary():
+    with open(os.path.join(HERE, "ports.json")) as fh:
+        ports = json.load(fh)
+    with open(os.path.join(HERE, "types.json")) as fh:
+        vocab = set(json.load(fh)["types"].keys())
+    for spec in ports["inputs"] + ports["outputs"]:
+        assert spec["type"] in vocab, spec

@@ -1,0 +1,27 @@
+{
+  "_comment": "Connection-standard ports for organ-scrum-service. SINGLE-op organ: decide() records one standup contribution and advances the daily-scrum state machine (extracted from advance_scrum() + get_current_speaker() in app/services/scrum_service.py). 'inputs' are exactly the keys decide() reads from STATE; 'outputs' are exactly the top-level keys written under decide()'s result.output. Types map to the vendored ./types.json vocabulary (the orchestrator types.json at Data-Flow-Advisory/orchestrator@feat/drift-gate was HTTP-404 to the fleet token on 2026-06-11, so JSON-primitive type names are vendored locally and must be reconciled upstream — see the PR description). The clock value used to stamp the recorded contribution arrives via context.now and is spine-supplied EXECUTION CONTEXT, not an inter-organ port, so it is intentionally NOT listed here (consistent with the connection-standard precedent that context.* is not a port). Nested fields inside contributions / contribution / next_speaker objects are NOT ports — only the top-level keys of decide()'s output dict are. 'turn_order' (the running-order the machine advances over) and 'contribution_text' (the payload being recorded) are the two genuinely-required inputs; every other input has a documented fallback in organ.py, hence required=false.",
+  "inputs": [
+    {"name": "phase", "type": "string", "required": false},
+    {"name": "turn_order", "type": "array", "required": true},
+    {"name": "turn_index", "type": "integer", "required": false},
+    {"name": "contributions", "type": "array", "required": false},
+    {"name": "contribution_text", "type": "string", "required": true},
+    {"name": "speaker_name", "type": "string", "required": false},
+    {"name": "speaker_role", "type": "string", "required": false},
+    {"name": "speaker_project_id", "type": "integer", "required": false},
+    {"name": "is_chair", "type": "boolean", "required": false},
+    {"name": "persona_names", "type": "object", "required": false},
+    {"name": "persona_roles", "type": "object", "required": false},
+    {"name": "persona_avatars", "type": "object", "required": false},
+    {"name": "persona_voice_ids", "type": "object", "required": false}
+  ],
+  "outputs": [
+    {"name": "phase", "type": "string"},
+    {"name": "turn_index", "type": "integer"},
+    {"name": "contribution", "type": "object"},
+    {"name": "contributions", "type": "array"},
+    {"name": "contribution_count", "type": "integer"},
+    {"name": "scrum_ended", "type": "boolean"},
+    {"name": "next_speaker", "type": "object"}
+  ]
+}

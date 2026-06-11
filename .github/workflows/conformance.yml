@@ -1,8 +1,8 @@
 name: conformance
 
 # Shadow-run the organ on its committed samples and report each verdict +
-# self_metric to the job summary — report only, no action. The pytest
-# suite is the hard gate.
+# self_metric to the job summary — report only, no action. The ports
+# conformance check and the pytest suite are the hard gates.
 
 on:
   push:
@@ -30,6 +30,8 @@ jobs:
           else
             echo "No samples/ directory found" >> "$GITHUB_STEP_SUMMARY"
           fi
+      - name: Verify connection-standard ports (ports.json)
+        run: python3 check_ports.py
       - name: Run tests
         run: |
           python -m pip install --quiet pytest
