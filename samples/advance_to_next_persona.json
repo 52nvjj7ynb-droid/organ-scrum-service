@@ -1,0 +1,21 @@
+{
+  "state": {
+    "phase": "standup",
+    "turn_order": [
+      {"type": "persona", "project_id": 3},
+      {"type": "persona", "project_id": 5}
+    ],
+    "turn_index": 0,
+    "contributions": [],
+    "contribution_text": "DONE: shipped the pricing one-pager. NEXT: AV Dawson follow-up email today. BLOCKERS: waiting on Jordan's cost numbers.",
+    "speaker_name": "Tim",
+    "speaker_role": "Head of Sales",
+    "speaker_project_id": 3,
+    "is_chair": false,
+    "persona_names": {"3": "Tim", "5": "Matt"},
+    "persona_roles": {"3": "Head of Sales", "5": "CTO"},
+    "persona_avatars": {"3": "🧑‍💼", "5": "🧑‍💻"},
+    "persona_voice_ids": {"3": "voice_tim", "5": "voice_matt"}
+  },
+  "context": {"now": "2026-06-11T09:00:00"}
+}

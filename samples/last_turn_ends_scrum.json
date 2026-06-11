@@ -1,0 +1,31 @@
+{
+  "state": {
+    "phase": "standup",
+    "turn_order": [
+      {"type": "persona", "project_id": 3},
+      {"type": "persona", "project_id": 5}
+    ],
+    "turn_index": 1,
+    "contributions": [
+      {
+        "speaker_name": "Tim",
+        "speaker_role": "Head of Sales",
+        "speaker_project_id": 3,
+        "is_chair": false,
+        "text": "DONE: pricing one-pager. NEXT: AV Dawson follow-up. BLOCKERS: Jordan's numbers.",
+        "phase": "standup",
+        "timestamp": "2026-06-11T09:00:00"
+      }
+    ],
+    "contribution_text": "DONE: reviewed the worker-fleet pacing gate. NEXT: spec the merge-train throttle. BLOCKERS: No blockers.",
+    "speaker_name": "Matt",
+    "speaker_role": "CTO",
+    "speaker_project_id": 5,
+    "is_chair": false,
+    "persona_names": {"3": "Tim", "5": "Matt"},
+    "persona_roles": {"3": "Head of Sales", "5": "CTO"},
+    "persona_avatars": {"3": "🧑‍💼", "5": "🧑‍💻"},
+    "persona_voice_ids": {"3": "voice_tim", "5": "voice_matt"}
+  },
+  "context": {"now": "2026-06-11T09:02:00"}
+}
